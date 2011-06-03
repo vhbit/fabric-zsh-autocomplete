@@ -1,0 +1,36 @@
+#compdef fab
+
+local curcontext=$curcontext state line
+declare -A opt_args
+
+declare target_list
+target_list=(`fab --shortlist 2>/dev/null`)
+
+_arguments -w -S -C \
+  '(-)--help[show this help message and exit]: :->noargs' \
+  '(-)--version[show program''s version number and exit]: :->noargs' \
+  '(-)--list[print list of possible commands and exit]: :->noargs' \
+  '(-)--shortlist[print non-verbose list of possible commands and exit]: :->noargs' \
+  '(--reject-unknown-hosts)--reject-unknown-hosts[reject unknown hosts]' \
+  '(--no-pty)--no-pty[do not use pseudo-terminal in run/sudo]' \
+  "(-d+ --display=-)"{-d+,--display=-}"[print detailed info about a given command]: :_values available\ targets $target_list" \
+  '(-D --disable-known-hosts)'{-D,--disable-known-hosts}'[do not load user known_hosts file]' \
+  '(-u+ --user=-)'{-u+,--user=-}'[username to use when connecting to remote hosts]: :' \
+  '(-p+ --password=-)'{-p+,--password=-}'[password for use with authentication and/or sudo]: :' \
+  '(-H+ --hosts=-)'{-H+,--hosts=-}'[comma separated list of hosts to operate on]: :' \
+  '(-R+ --roles=-)'{-R+,--roles=-}'[comma separated list of roles to operate on]: :' \
+  '(-a --no-agent)'{-a,--no-agent}'[don''t use the running SSH agent]' \
+  '(-k --no-keys)'{-k,--no-keys}'[don''t load private key files from ~/.ssh/]' \
+  '(-w --warn-only)'{-w,--warn-only}'[warn instead of abort, when commands fail]' \
+  '-i+[path to SSH private key file. May be repeated]: :_files' \
+  "(-f+ --fabfile=)"{-f+,--fabfile=}"[Python module file to import]: :_files -g *.py" \
+  '(-c+ --config=-)'{-c+,--config=-}'[specify location of config file to use]: :_files' \
+  '(-s+ --shell=-)'{-s+,--shell=-}'[specify a new shell, defaults to ''/bin/bash -l -c'']: :' \
+  '(--hide=-)--hide=-[comma-separated list of output levels to hide]: :' \
+  '(--show=-)--show=-[comma-separated list of output levels to show]: :' \
+  '*::: :->subcmds' && return 0
+
+if (( CURRENT == 1 && $state != noargs  )); then
+    _describe -t commands "fabric targets" target_list
+    return
+fi

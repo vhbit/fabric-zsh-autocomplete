@@ -1,0 +1,10 @@
+A simple complete function
+
+Usage:
+put somewhere in fpath and restart shell
+
+Sample configuration:
+1) mkdir -p ~/.zsh/functions
+2) cp _fab !:2
+3) vi ~/.zshrc
+4) put somewhere: fpath=(~/.zsh/functions $fpath)
