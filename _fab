@@ -6,6 +6,10 @@ declare -A opt_args
 declare target_list
 target_list=(`fab --shortlist 2>/dev/null`)
 
+_targets() {
+    _describe -t commands "fabric targets" target_list
+}
+
 output_levels=(
     'status: Status messages, i.e. noting when Fabric is done running, if the user used a keyboard interrupt, or when servers are disconnected from. These messages are almost always relevant and rarely verbose.'
     'aborts: Abort messages. Like status messages, these should really only be turned off when using Fabric as a library, and possibly not even then. Note that even if this output group is turned off, aborts will still occur – there just won’t be any output about why Fabric aborted!'
@@ -23,7 +27,7 @@ _arguments -w -S -C \
   '(-)--shortlist[print non-verbose list of possible commands and exit]: :->noargs' \
   '(--reject-unknown-hosts)--reject-unknown-hosts[reject unknown hosts]' \
   '(--no-pty)--no-pty[do not use pseudo-terminal in run/sudo]' \
-  "(-d+ --display=-)"{-d+,--display=-}"[print detailed info about a given command]: :_values available\ targets $target_list" \
+  "(-d+ --display=-)"{-d+,--display=-}"[print detailed info about a given command]: :_targets" \
   '(-D --disable-known-hosts)'{-D,--disable-known-hosts}'[do not load user known_hosts file]' \
   '(-r --reject-unknown-hosts)'{-r,--reject-unknown-hosts}'[reject unknown hosts]' \
   '(-u+ --user=-)'{-u+,--user=-}'[username to use when connecting to remote hosts]: :' \
@@ -48,7 +52,7 @@ if [[ CURRENT -ge 1 ]]; then
         levels)
             _describe -t commands "output levels" output_levels;;
         *)
-            _describe -t commands "fabric targets" target_list;;
+            _targets;;
     esac
 
     return
