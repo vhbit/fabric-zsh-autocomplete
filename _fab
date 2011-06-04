@@ -25,6 +25,7 @@ _arguments -w -S -C \
   '(--no-pty)--no-pty[do not use pseudo-terminal in run/sudo]' \
   "(-d+ --display=-)"{-d+,--display=-}"[print detailed info about a given command]: :_values available\ targets $target_list" \
   '(-D --disable-known-hosts)'{-D,--disable-known-hosts}'[do not load user known_hosts file]' \
+  '(-r --reject-unknown-hosts)'{-r,--reject-unknown-hosts}'[reject unknown hosts]' \
   '(-u+ --user=-)'{-u+,--user=-}'[username to use when connecting to remote hosts]: :' \
   '(-p+ --password=-)'{-p+,--password=-}'[password for use with authentication and/or sudo]: :' \
   '(-H+ --hosts=-)'{-H+,--hosts=-}'[comma separated list of hosts to operate on]: :' \
