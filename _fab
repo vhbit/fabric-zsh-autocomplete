@@ -17,8 +17,8 @@ output_levels=(
 )
 
 _arguments -w -S -C \
-  '(-)--help[show this help message and exit]: :->noargs' \
-  '(-)--version[show program''s version number and exit]: :->noargs' \
+  '(-)'{-h,--help}'[show this help message and exit]: :->noargs' \
+  '(-)'{-V,--version}'[show program''s version number and exit]: :->noargs' \
   '(-)--list[print list of possible commands and exit]: :->noargs' \
   '(-)--shortlist[print non-verbose list of possible commands and exit]: :->noargs' \
   '(--reject-unknown-hosts)--reject-unknown-hosts[reject unknown hosts]' \
