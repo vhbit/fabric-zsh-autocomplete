@@ -3,10 +3,13 @@
 local curcontext=$curcontext state line
 declare -A opt_args
 
-declare target_list
-target_list=(`fab --shortlist 2>/dev/null`)
-
 _targets() {
+    local fabfile
+    local target_list
+
+    fabfile=${opt_args[-f]:-${opt_args[--fabfile]:-"fabfile.py"}}
+    target_list=($(fab -f $fabfile --shortlist 2>/dev/null))
+
     _describe -t commands "fabric targets" target_list
 }
 
